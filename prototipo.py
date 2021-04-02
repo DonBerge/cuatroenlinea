@@ -15,11 +15,16 @@ def tableroVacio():
     ]
 
 
+def esColumnaValida(columna):
+    return columna >= 1 and columna <= 6
+
+
 def soltarFichaEnColumna(ficha, columna, tablero):
-    for fila in range(6, 0, -1):
-        if tablero[fila-1][columna-1] == 0:
-            tablero[fila-1][columna-1] = ficha
-            return
+    if(esColumnaValida(columna)):
+        for fila in range(6, 0, -1):
+            if tablero[fila-1][columna-1] == 0:
+                tablero[fila-1][columna-1] = ficha
+                return
 
 
 def completarTableroEnOrden(secuencia, tablero):
