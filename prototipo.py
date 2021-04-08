@@ -1,7 +1,7 @@
 import sys
 
-sys.stdout = open("output.txt", 'w')
 sys.stdin = open("input.txt", 'r')
+sys.stdout = open("output.txt", 'w')
 
 
 def tableroVacio():
@@ -14,17 +14,18 @@ def tableroVacio():
         [0, 0, 0, 0, 0, 0, 0],
     ]
 
-
-def esColumnaValida(columna):
-    return columna >= 1 and columna <= 6
+def esSecuenciaValida(secuencia):
+    for i in secuencia:
+        if(not (i>=1 and i<=6)):
+            return False
+    return True
 
 
 def soltarFichaEnColumna(ficha, columna, tablero):
-    if(esColumnaValida(columna)):
-        for fila in range(6, 0, -1):
-            if tablero[fila-1][columna-1] == 0:
-                tablero[fila-1][columna-1] = ficha
-                return
+    for fila in range(6, 0, -1):
+        if tablero[fila-1][columna-1] == 0:
+            tablero[fila-1][columna-1] = ficha
+            return
 
 
 def completarTableroEnOrden(secuencia, tablero):
@@ -48,4 +49,7 @@ def dibujarTablero(tablero):
 
 secuencia = list(map(int, input().split()))
 
-dibujarTablero(completarTableroEnOrden(secuencia, tableroVacio()))
+if(esSecuenciaValida(secuencia)):
+    dibujarTablero(completarTableroEnOrden(secuencia, tableroVacio()))
+else:
+    print("Secuencia no valida, las columnas tienen que estar entre el 1 y el 7")
