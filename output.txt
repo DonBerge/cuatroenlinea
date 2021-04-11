@@ -1,0 +1,1 @@
+Secuencia no valida, las columnas tienen que estar entre el 1 y el 7
