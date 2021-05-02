@@ -20,6 +20,24 @@ def contenidoColumna(nro_columna,tablero):
         columna.append(fila[nro_columna-1])
     return columna
 
+def contenidoFila(nro_fila, tablero):
+    fila = []
+    for nro_columna in range(0,6,1):
+        fila.append(tablero[nro_fila-1][nro_columna])
+    return fila
+
+def filas(tablero):
+    return tablero
+
+def columnas(tablero):
+    array_de_columnas=[]
+    for nro_columna in range (0,6,1):
+        columna = []
+        for nro_fila in range(0,6,1):
+            columna.append(tablero[nro_fila][nro_columna])
+        array_de_columnas.append(columna)
+    return array_de_columnas
+
 def esSecuenciaValida(secuencia):
     for i in secuencia:
         if(not (i>=1 and i<=6)):
@@ -55,7 +73,10 @@ def dibujarTablero(tablero):
 
 secuencia = list(map(int, input().split()))
 
+tablero=tableroVacio()
+
 if(esSecuenciaValida(secuencia)):
-    dibujarTablero(completarTableroEnOrden(secuencia, tableroVacio()))
+    tablero=completarTableroEnOrden(secuencia, tableroVacio())
+    dibujarTablero(tablero)
 else:
     print("Secuencia no valida, las columnas tienen que estar entre el 1 y el 7")
