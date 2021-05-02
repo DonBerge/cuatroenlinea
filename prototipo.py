@@ -14,6 +14,12 @@ def tableroVacio():
         [0, 0, 0, 0, 0, 0, 0],
     ]
 
+def contenidoColumna(nro_columna,tablero):
+    columna = []
+    for fila in tablero:
+        columna.append(fila[nro_columna-1])
+    return columna
+
 def esSecuenciaValida(secuencia):
     for i in secuencia:
         if(not (i>=1 and i<=6)):
