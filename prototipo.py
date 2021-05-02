@@ -62,13 +62,18 @@ def completarTableroEnOrden(secuencia, tablero):
 
 def dibujarTablero(tablero):
     for fila in range(0, 6, 1):
+        print('|',end=' ')
         for columna in range(0, 6, 1):
             ficha = tablero[fila][columna]
             if(ficha):
                 print(ficha, end=' ')
             else:
-                print(end=' ')
-        print()
+                print(end="  ")
+        print('|')
+    print('+',end='')
+    for i in range(0,13,1):
+        print('-',end='')
+    print('+',end=' ')
 
 
 secuencia = list(map(int, input().split()))
