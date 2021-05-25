@@ -1,9 +1,5 @@
 import sys
 
-sys.stdin = open("input.txt", 'r')
-sys.stdout = open("output.txt", 'w')
-
-
 def tableroVacio():
     return [
         [0, 0, 0, 0, 0, 0, 0],
@@ -21,26 +17,23 @@ def contenidoColumna(nro_columna,tablero):
     return columna
 
 def contenidoFila(nro_fila, tablero):
-    fila = []
-    for nro_columna in range(0,6,1):
-        fila.append(tablero[nro_fila-1][nro_columna])
-    return fila
+    return tablero[nro_fila-1]
 
 def filas(tablero):
     return tablero
 
 def columnas(tablero):
     array_de_columnas=[]
-    for nro_columna in range (0,6,1):
+    for nro_columna in range (7):
         columna = []
-        for nro_fila in range(0,6,1):
+        for nro_fila in range(6):
             columna.append(tablero[nro_fila][nro_columna])
         array_de_columnas.append(columna)
     return array_de_columnas
 
 def esSecuenciaValida(secuencia):
     for i in secuencia:
-        if(not (i>=1 and i<=6)):
+        if(not (i>=1 and i<=7)):
             return False
     return True
 
@@ -61,9 +54,9 @@ def completarTableroEnOrden(secuencia, tablero):
 
 
 def dibujarTablero(tablero):
-    for fila in range(0, 6, 1):
+    for fila in range(6):
         print('|',end=' ')
-        for columna in range(0, 6, 1):
+        for columna in range(7):
             ficha = tablero[fila][columna]
             if(ficha):
                 print(ficha, end=' ')
@@ -71,12 +64,12 @@ def dibujarTablero(tablero):
                 print(end="  ")
         print('|')
     print('+',end='')
-    for i in range(0,13,1):
+    for i in range(15):
         print('-',end='')
     print('+',end=' ')
 
 
-secuencia = list(map(int, input().split()))
+secuencia = [1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 3, 4, 5, 6, 7, 4, 5, 6, 7, 5, 6, 7, 6, 7]
 
 tablero=tableroVacio()
 
