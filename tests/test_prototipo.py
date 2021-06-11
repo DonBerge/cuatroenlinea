@@ -1,5 +1,4 @@
 from src.prototipo import columnas, completarTableroEnOrden, contenidoColumna, contenidoFila, esSecuenciaValida, soltarFichaEnColumna, tableroVacio, filas
-import random
 
 tablero_vacio=tableroVacio()
 
@@ -28,6 +27,10 @@ tablero_completo = completarTableroEnOrden(secuencia_tablero_medio_lleno,tablero
 
 def test_esSecuenciaValida():
     assert(esSecuenciaValida(secuencia_tablero_medio_lleno))
+
+def test_esSecuenciaInvalida():
+    assert not esSecuenciaValida([-1,1,-10,3,5])
+    assert not esSecuenciaValida([1,7,9,2])
 
 def test_completar_tablero_en_orden():
     assert(tablero_completo == tablero_medio_lleno)
