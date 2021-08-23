@@ -1,80 +1,83 @@
-import sys
+class Tablero:
+    def __init__(self, secuencia=None):
+        self.tablero = [
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0],
+        ]
 
-def tableroVacio():
-    return [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-    ]
+        self.width=7
+        self.height=6
+        
+        if(secuencia!=None):
+            ficha = 1
+            for i in secuencia:
+                self.soltarFichaEnColumna(ficha, i)
+                ficha = (ficha % 2)+1
 
-def contenidoColumna(nro_columna,tablero):
-    columna = []
-    for fila in tablero:
-        columna.append(fila[nro_columna-1])
-    return columna
 
-def contenidoFila(nro_fila, tablero):
-    return tablero[nro_fila-1]
-
-def filas(tablero):
-    return tablero
-
-def columnas(tablero):
-    array_de_columnas=[]
-    for nro_columna in range (7):
+    def contenidoColumna(self,nro_columna):
         columna = []
-        for nro_fila in range(6):
-            columna.append(tablero[nro_fila][nro_columna])
-        array_de_columnas.append(columna)
-    return array_de_columnas
+        for fila in self.tablero:
+            columna.append(fila[nro_columna-1])
+        return columna
+
+    def contenidoFila(self,nro_fila):
+        return self.tablero[nro_fila-1]
+
+    def filas(self):
+        return self.tablero
+
+    def columnas(self):
+        array_de_columnas=[]
+        for nro_columna in range(self.width):
+            columna = []
+            for fila in self.tablero:
+                columna.append(fila[nro_columna])
+            array_de_columnas.append(columna)
+        return array_de_columnas
+
+    def soltarFichaEnColumna(self,ficha, columna):
+        for fila in reversed(self.tablero):
+            if fila[columna-1] == 0:
+                fila[columna-1] = ficha
+                return
+    
+    def __str__(self):
+        tablero_string=""
+        for fila in self.tablero:
+            tablero_string+="| "
+            
+            for ficha in fila:
+                if(ficha):
+                    tablero_string+=str(ficha)
+                else:
+                    tablero_string+=' '
+                tablero_string+=' '
+            
+            tablero_string+="|\n"
+        
+        tablero_string+='+'
+        for i in range(self.width*2+1):
+            tablero_string+='-'
+        tablero_string+='+'
+
+        return tablero_string
+
+#################################################################
 
 def esSecuenciaValida(secuencia):
-    for i in secuencia:
-        if(not (i>=1 and i<=7)):
-            return False
-    return True
+    elementos_validos=[columna for columna in secuencia if 1<=columna<=7]
+    return len(elementos_validos) == len(secuencia)
 
 
-def soltarFichaEnColumna(ficha, columna, tablero):
-    for fila in range(6, 0, -1):
-        if tablero[fila-1][columna-1] == 0:
-            tablero[fila-1][columna-1] = ficha
-            return
-
-
-def completarTableroEnOrden(secuencia, tablero):
-    ficha = 1
-    for i in secuencia:
-        soltarFichaEnColumna(ficha, i, tablero)
-        ficha = (ficha % 2)+1
-    return tablero
-
-
-def dibujarTablero(tablero):
-    for fila in range(6):
-        print('|',end=' ')
-        for columna in range(7):
-            ficha = tablero[fila][columna]
-            if(ficha):
-                print(ficha, end=' ')
-            else:
-                print(end="  ")
-        print('|')
-    print('+',end='')
-    for i in range(15):
-        print('-',end='')
-    print('+',end=' ')
-
-
-secuencia = [1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 3, 4, 5, 6, 7, 4, 5, 6, 7, 5, 6, 7, 6, 7]
-
-tablero=tableroVacio()
+secuencia = [1, 2, 3, 4, 5, 6, 7, 4]
 
 if(esSecuenciaValida(secuencia)):
-    tablero=completarTableroEnOrden(secuencia, tableroVacio())
-    dibujarTablero(tablero)
+    tablero = Tablero(secuencia)
+    print(tablero)
 else:
     print("Secuencia no valida, las columnas tienen que estar entre el 1 y el 7")
