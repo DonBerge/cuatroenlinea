@@ -20,10 +20,7 @@ class Tablero:
 
 
     def contenidoColumna(self,nro_columna):
-        columna = []
-        for fila in self.tablero:
-            columna.append(fila[nro_columna-1])
-        return columna
+        return [fila[nro_columna-1] for fila in self.tablero]
 
     def contenidoFila(self,nro_fila):
         return self.tablero[nro_fila-1]
@@ -32,13 +29,7 @@ class Tablero:
         return self.tablero
 
     def columnas(self):
-        array_de_columnas=[]
-        for nro_columna in range(self.width):
-            columna = []
-            for fila in self.tablero:
-                columna.append(fila[nro_columna])
-            array_de_columnas.append(columna)
-        return array_de_columnas
+        return [self.contenidoColumna(x) for x in range(1,self.width+1)]
 
     def soltarFichaEnColumna(self,ficha, columna):
         for fila in reversed(self.tablero):
@@ -73,11 +64,11 @@ def esSecuenciaValida(secuencia):
     elementos_validos=[columna for columna in secuencia if 1<=columna<=7]
     return len(elementos_validos) == len(secuencia)
 
+if __name__ == "__main__":
+    secuencia = [1, 2, 3, 4, 5, 6, 7, 4]
 
-secuencia = [1, 2, 3, 4, 5, 6, 7, 4]
-
-if(esSecuenciaValida(secuencia)):
-    tablero = Tablero(secuencia)
-    print(tablero)
-else:
-    print("Secuencia no valida, las columnas tienen que estar entre el 1 y el 7")
+    if(esSecuenciaValida(secuencia)):
+        tablero = Tablero(secuencia)
+        print(tablero.columnas())
+    else:
+        print("Secuencia no valida, las columnas tienen que estar entre el 1 y el 7")

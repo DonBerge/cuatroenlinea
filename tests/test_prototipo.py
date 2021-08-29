@@ -1,6 +1,6 @@
-from src.prototipo import columnas, completarTableroEnOrden, contenidoColumna, contenidoFila, esSecuenciaValida, soltarFichaEnColumna, tableroVacio, filas
+from src.prototipo import Tablero, esSecuenciaValida
 
-tablero_vacio=tableroVacio()
+tablero_vacio=Tablero()
 
 tablero_medio_lleno = [
         [0, 0, 0, 0, 0, 2, 1],
@@ -23,49 +23,52 @@ columnas_tablero_medio_lleno = [
 
 secuencia_tablero_medio_lleno = [1, 2, 3, 4, 5, 6, 7, 2, 3, 4, 5, 6, 7, 3, 4, 5, 6, 7, 4, 5, 6, 7, 5, 6, 7, 6, 7]
 
-tablero_completo = completarTableroEnOrden(secuencia_tablero_medio_lleno,tableroVacio())
+tablero_completo = Tablero(secuencia_tablero_medio_lleno)
 
 def test_esSecuenciaValida():
-    assert(esSecuenciaValida(secuencia_tablero_medio_lleno))
+    assert esSecuenciaValida(secuencia_tablero_medio_lleno)
 
 def test_esSecuenciaInvalida():
     assert not esSecuenciaValida([-1,1,-10,3,5])
     assert not esSecuenciaValida([1,7,9,2])
 
 def test_completar_tablero_en_orden():
-    assert(tablero_completo == tablero_medio_lleno)
+    assert tablero_completo.filas() == tablero_medio_lleno
 
 def test_contenidoFila():
-    for i in range(6):
-        assert tablero_medio_lleno[i]==contenidoFila(i+1,tablero_medio_lleno)
+    if(tablero_completo.height==6):
+        for i in range(6):
+            assert tablero_medio_lleno[i]==tablero_completo.contenidoFila(i+1)
 
 def test_contenidoColumna():
-    for i in range(7):
-        assert columnas_tablero_medio_lleno[i] == contenidoColumna(i+1,tablero_medio_lleno)
+    if(tablero_completo.width==7):
+        for i in range(7):
+            assert columnas_tablero_medio_lleno[i] == tablero_completo.contenidoColumna(i+1)
 
 def test_soltarFichaEnColumna():
-    tablero = tableroVacio()
-    for i in range(6):
-        soltarFichaEnColumna(1,3,tablero)
-        soltarFichaEnColumna(2,4,tablero)
-    assert [1,1,1,1,1,1] == contenidoColumna(3,tablero)
-    assert [2,2,2,2,2,2] == contenidoColumna(4,tablero)
+    tablero = Tablero()
+    h = tablero.height
+    for i in range(h):
+        tablero.soltarFichaEnColumna(1,3)
+        tablero.soltarFichaEnColumna(2,4)
+    assert [1 for x in range(h)] == tablero.contenidoColumna(3)
+    assert [2 for x in range(h)] == tablero.contenidoColumna(4)
 
 def test_filas():
-    assert tablero_medio_lleno == filas(tablero_medio_lleno)
+    assert tablero_medio_lleno == tablero_completo.filas()
 
 def test_columnas():
-    assert columnas_tablero_medio_lleno == columnas(tablero_medio_lleno)
+    assert columnas_tablero_medio_lleno == tablero_completo.columnas()
 
 def test_tablero_vacio_tiene_6_filas():
-    assert(len(tablero_vacio)==6)
+    assert len(tablero_vacio.filas())==tablero_vacio.height
 
 def test_tablero_vacio_tiene_7_columnas():
-    assert(len(tablero_vacio[0])==7)
+    assert len(tablero_vacio.columnas())==tablero_vacio.width
 
 def test_tablero_vacio_esta_vacio():
-    fila_vacia = [0,0,0,0,0,0,0]
-    for i in range(6):
-        assert(tablero_vacio[i]==fila_vacia)
+    fila_vacia = [0 for x in range(tablero_vacio.width)]
+    for fila in tablero_vacio.filas():
+        assert fila==fila_vacia
 
 
